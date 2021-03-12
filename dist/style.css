@@ -1,0 +1,9 @@
+button.diffrent-position {
+    
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.invisible {
+    display: none;
+}

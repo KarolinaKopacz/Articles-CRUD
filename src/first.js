@@ -35,7 +35,6 @@ function render(collectionItems) {
     const newDivWithNewArticle = `<tr>
                                         <th>${index + 1}</th>
                                         <td class="title-of-article">${element.title}</td>
-                                        <td class="article-description">${element.description}</td>
                                         <td>
                                             <a class="edit-article"  data-id="${
                                               element._id

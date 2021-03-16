@@ -1,5 +1,7 @@
 import { getJSON } from "./first"
 import { closeModal, openModal } from "./functions"
+import suneditor from "suneditor"
+import plugins from "suneditor/src/plugins"
 
 const requestURL = "https://articles-c78c.restdb.io/rest/articles"
 
@@ -10,10 +12,23 @@ const textareaForNewDescripcion = document.querySelector(".create-description")
 const saveNewArticleBtn = document.querySelector("#save-new-article")
 
 createNewArticleBtn.addEventListener("click", () => openModal(modalForCreateNewArticle))
-
+const createEditor = suneditor.create("create", {
+  plugins: plugins,
+  buttonList: [
+    ["font", "fontSize", "formatBlock"],
+    ["paragraphStyle", "blockquote"],
+    ["bold", "underline", "italic", "strike", "subscript", "superscript"],
+    ["fontColor", "hiliteColor", "textStyle"],
+    ["removeFormat"],
+    ["outdent", "indent"],
+    ["align", "horizontalRule", "list", "lineHeight"],
+    ["fullScreen", "showBlocks", "codeView"],
+  ],
+})
 function saveNewCreatedArticleIntoDatabase() {
   const newTitle = inputForNewTitle.value
-  const newDescription = textareaForNewDescripcion.value
+  const newDescription = createEditor.getContents()
+  console.log("descri", newDescription)
 
   if (newTitle.length > 0 && newDescription.length > 0) {
     saveNewArticleBtn.classList.add("is-loading")

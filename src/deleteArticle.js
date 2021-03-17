@@ -4,6 +4,10 @@ import { closeModal, openModal } from "./functions"
 const modalForConfirmDeleteArticle = document.querySelector(".modal-for-confirm-delete-article")
 
 export function addListenerOnDeleteBtn() {
+  if (!modalForConfirmDeleteArticle) {
+    return
+  }
+
   const deleteArticleBtn = document.querySelectorAll(".delete-article")
 
   deleteArticleBtn.forEach(function (btn) {

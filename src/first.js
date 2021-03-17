@@ -29,6 +29,18 @@ export async function getJSON() {
   })
 }
 
+function addListenerOnPreviewArticleBtns() {
+  const previewArticleBtns = document.querySelectorAll(".preview-article")
+
+  previewArticleBtns.forEach(function (btn) {
+    const dataId = btn.getAttribute("data-id")
+
+    btn.addEventListener("click", () => {
+      location.href = `http://127.0.0.1:5500/dist/articlePreview.html?id=${dataId}`
+    })
+  })
+}
+
 function render(collectionItems) {
   listOfArticles.innerHTML = ""
   collectionItems.forEach(function (element, index) {
@@ -36,12 +48,16 @@ function render(collectionItems) {
                                         <th>${index + 1}</th>
                                         <td class="title-of-article">${element.title}</td>
                                         <td>
+                                            <a class="preview-article" data-id="${
+                                              element._id
+                                            }"><i class="far fa-eye"></i></a>
                                             <a class="edit-article"  data-id="${
                                               element._id
                                             }"><i class="fas fa-edit"></i></a>
                                             <a class="delete-article" data-id="${
                                               element._id
                                             }"><i class="fas fa-trash"></i></a>
+                                            
                                         </td>
                                         <td>${format(new Date(element.createdAt), "dd-MM-yyyy HH:mm")}</td>
                                         <td>${
@@ -58,4 +74,5 @@ function render(collectionItems) {
 
   addListenerOnDeleteBtn()
   addListenerOnEditBtn()
+  addListenerOnPreviewArticleBtns()
 }

@@ -1,8 +1,6 @@
 import { getJSON } from "./first"
 import { articles } from "./first"
-import { closeModal, openModal } from "./functions"
-import suneditor from "suneditor"
-import plugins from "suneditor/src/plugins"
+import { closeModal, getSuneditorInstance, openModal } from "./functions"
 
 const modalFotEdittingArticle = document.querySelector(".modal-for-editing-article")
 const titleEditInput = document.querySelector("#edit-title")
@@ -11,23 +9,14 @@ const editArticleIdHiddenInput = document.querySelector("#article-id")
 const saveEeditedArticleBtn = document.querySelector("#save-edited-article")
 
 let editArticleId = ""
-const editEditor = suneditor.create("edit-description", {
-  plugins: plugins,
-  buttonList: [
-    ["font", "fontSize", "formatBlock"],
-    ["paragraphStyle", "blockquote"],
-    ["bold", "underline", "italic", "strike", "subscript", "superscript"],
-    ["fontColor", "hiliteColor", "textStyle"],
-    ["removeFormat"],
-    ["outdent", "indent"],
-    ["align", "horizontalRule", "list", "lineHeight"],
-    ["fullScreen", "showBlocks", "codeView"],
-  ],
-})
+const sunEditorInstance = getSuneditorInstance("edit-description")
 
 export function addListenerOnEditBtn() {
-  const editArticleBtns = document.querySelectorAll(".edit-article")
+  if (!sunEditorInstance) {
+    return
+  }
 
+  const editArticleBtns = document.querySelectorAll(".edit-article")
   editArticleBtns.forEach(function (btn) {
     const dataId = btn.getAttribute("data-id")
 
@@ -38,7 +27,7 @@ export function addListenerOnEditBtn() {
       articles.forEach((article) => {
         if (article._id === editArticleId) {
           titleEditInput.value = article.title
-          editEditor.setContents(article.description)
+          sunEditorInstance.setContents(article.description)
           editArticleIdHiddenInput.value = editArticleId
         }
       })
@@ -47,11 +36,15 @@ export function addListenerOnEditBtn() {
 }
 
 function saveEditedArticleIntoDatabase() {
+  if (!sunEditorInstance) {
+    return
+  }
+
   const newEditedArticleId = editArticleIdHiddenInput.value
   const requestURL = `https://articles-c78c.restdb.io/rest/articles/${newEditedArticleId}`
 
   const newEditedTitle = titleEditInput.value
-  const newEditedDescription = editEditor.getContents()
+  const newEditedDescription = sunEditorInstance.getContents()
 
   if (newEditedTitle.length > 0 && newEditedDescription.length > 0) {
     saveEeditedArticleBtn.classList.add("is-loading")
@@ -74,8 +67,9 @@ function saveEditedArticleIntoDatabase() {
       titleEditInput.value = ""
       descriptionEditInput.value = ""
       editArticleIdHiddenInput.value = ""
+      sunEditorInstance.setContents("")
       closeModal(modalFotEdittingArticle)
     })
   }
 }
-saveEeditedArticleBtn.addEventListener("click", saveEditedArticleIntoDatabase)
+saveEeditedArticleBtn && saveEeditedArticleBtn.addEventListener("click", saveEditedArticleIntoDatabase)

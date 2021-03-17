@@ -1,7 +1,5 @@
 import { getJSON } from "./first"
-import { closeModal, openModal } from "./functions"
-import suneditor from "suneditor"
-import plugins from "suneditor/src/plugins"
+import { closeModal, getSuneditorInstance, openModal } from "./functions"
 
 const requestURL = "https://articles-c78c.restdb.io/rest/articles"
 
@@ -11,21 +9,13 @@ const inputForNewTitle = document.querySelector(".create-title")
 const textareaForNewDescripcion = document.querySelector(".create-description")
 const saveNewArticleBtn = document.querySelector("#save-new-article")
 
-createNewArticleBtn.addEventListener("click", () => openModal(modalForCreateNewArticle))
-const createEditor = suneditor.create("create", {
-  plugins: plugins,
-  buttonList: [
-    ["font", "fontSize", "formatBlock"],
-    ["paragraphStyle", "blockquote"],
-    ["bold", "underline", "italic", "strike", "subscript", "superscript"],
-    ["fontColor", "hiliteColor", "textStyle"],
-    ["removeFormat"],
-    ["outdent", "indent"],
-    ["align", "horizontalRule", "list", "lineHeight"],
-    ["fullScreen", "showBlocks", "codeView"],
-  ],
-})
+const createEditor = getSuneditorInstance("create")
+
 function saveNewCreatedArticleIntoDatabase() {
+  if (!createEditor) {
+    return
+  }
+
   const newTitle = inputForNewTitle.value
   const newDescription = createEditor.getContents()
   console.log("descri", newDescription)
@@ -57,4 +47,6 @@ function saveNewCreatedArticleIntoDatabase() {
     })
   }
 }
-saveNewArticleBtn.addEventListener("click", saveNewCreatedArticleIntoDatabase)
+
+createNewArticleBtn && createNewArticleBtn.addEventListener("click", () => openModal(modalForCreateNewArticle))
+saveNewArticleBtn && saveNewArticleBtn.addEventListener("click", saveNewCreatedArticleIntoDatabase)

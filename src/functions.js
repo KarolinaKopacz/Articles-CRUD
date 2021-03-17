@@ -1,3 +1,6 @@
+import suneditor from "suneditor"
+import plugins from "suneditor/src/plugins"
+
 export function openModal(modal) {
   modal.classList.add("is-active")
 }
@@ -16,5 +19,25 @@ export function closeModalListener() {
         closeModal(modal)
       })
     })
+  })
+}
+
+export function getSuneditorInstance(objectId) {
+  if (!document.getElementById(objectId)) {
+    return null
+  }
+
+  return suneditor.create(objectId, {
+    plugins: plugins,
+    buttonList: [
+      ["font", "fontSize", "formatBlock"],
+      ["paragraphStyle", "blockquote"],
+      ["bold", "underline", "italic", "strike", "subscript", "superscript"],
+      ["fontColor", "hiliteColor", "textStyle"],
+      ["removeFormat"],
+      ["outdent", "indent"],
+      ["align", "horizontalRule", "list", "lineHeight"],
+      ["fullScreen", "showBlocks", "codeView"],
+    ],
   })
 }

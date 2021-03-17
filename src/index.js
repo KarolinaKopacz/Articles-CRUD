@@ -3,6 +3,10 @@ import { closeModalListener } from "./functions"
 import "./createArticle"
 import "./deleteArticle"
 import "./editArticle"
+import "./previewArticle"
 
-getJSON()
-closeModalListener()
+const page = document.body.getAttribute("id")
+if (page === "home") {
+  getJSON()
+  closeModalListener()
+}

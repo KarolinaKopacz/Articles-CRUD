@@ -3,10 +3,12 @@ import { closeModalListener } from "./functions"
 import "./createArticle"
 import "./deleteArticle"
 import "./editArticle"
-import "./previewArticle"
+import { getJSONoneArticle } from "./previewArticle"
 
 const page = document.body.getAttribute("id")
 if (page === "home") {
   getJSON()
   closeModalListener()
+} else {
+  getJSONoneArticle()
 }

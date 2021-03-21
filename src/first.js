@@ -18,7 +18,7 @@ export async function getJSON() {
     const jsonData = await response.json()
 
     jsonData.sort(function (a, b) {
-      return a.createdAt - b.createdAt
+      return b.createdAt - a.createdAt
     })
 
     articles = jsonData
@@ -46,7 +46,7 @@ function render(collectionItems) {
   collectionItems.forEach(function (element, index) {
     const newDivWithNewArticle = `<tr>
                                         <th>${index + 1}</th>
-                                        <td class="title-of-article">${element.title}</td>
+                                        <td class="title-of-article has-text-left">${element.title}</td>
                                         <td>
                                             <a class="preview-article" data-id="${
                                               element._id

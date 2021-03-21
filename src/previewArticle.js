@@ -15,7 +15,6 @@ export async function getJSONoneArticle() {
     const jsonData = await response.json()
 
     articles = jsonData
-    console.log("art", articles)
     document.querySelector(".is-loading").style.display = "none"
     renderArticlePreview()
   })

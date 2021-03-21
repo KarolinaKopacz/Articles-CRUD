@@ -30,14 +30,15 @@ export function getSuneditorInstance(objectId) {
   return suneditor.create(objectId, {
     plugins: plugins,
     buttonList: [
-      ["font", "fontSize", "formatBlock"],
+      ["fontSize", "formatBlock"],
       ["paragraphStyle", "blockquote"],
       ["bold", "underline", "italic", "strike", "subscript", "superscript"],
       ["fontColor", "hiliteColor", "textStyle"],
       ["removeFormat"],
       ["outdent", "indent"],
       ["align", "horizontalRule", "list", "lineHeight"],
-      ["fullScreen", "showBlocks", "codeView"],
+      ["fullScreen", "showBlocks"],
+      ["table", "link", "image", "video", "audio"],
     ],
   })
 }

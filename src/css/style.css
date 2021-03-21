@@ -1,3 +1,4 @@
+/* HOME PAGE */
 button.diffrent-position {
     
     left: 50%;
@@ -7,6 +8,26 @@ button.diffrent-position {
 .invisible {
     display: none;
 }
-h1 {
-    font-size: 50px;
+
+table {
+    text-align: center;
 }
+
+td.title-of-article {
+    max-width: 490px;
+    max-height: 41px;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    overflow: hidden;    
+}
+
+/* ARTICLE PREVIEW PAGE */
+body#article {
+    margin: 40px;
+
+}
+#preview-title {
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+

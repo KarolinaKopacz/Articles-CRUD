@@ -1,24 +1,17 @@
 import { getJSON } from "./first"
-import { closeModal, getSuneditorInstance, openModal } from "./functions"
+import { closeModal, openModal } from "./functions"
 
 const requestURL = "https://articles-c78c.restdb.io/rest/articles"
 
 const createNewArticleBtn = document.querySelector(".create-new-article")
-const modalForCreateNewArticle = document.querySelector(".modal-for-create-new-article")
-const inputForNewTitle = document.querySelector(".create-title")
-const textareaForNewDescripcion = document.querySelector(".create-description")
+const modalForCreateNewArticle = document.querySelector<HTMLDivElement>(".modal-for-create-new-article")
+const inputForNewTitle = document.querySelector<HTMLInputElement>(".create-title")
+const textareaForNewDescripcion = document.querySelector<HTMLTextAreaElement>("#create")
 const saveNewArticleBtn = document.querySelector("#save-new-article")
 
-const createEditor = getSuneditorInstance("create")
-
 function saveNewCreatedArticleIntoDatabase() {
-  if (!createEditor) {
-    return
-  }
-
   const newTitle = inputForNewTitle.value
-  const newDescription = createEditor.getContents()
-  console.log("descri", newDescription)
+  const newDescription = textareaForNewDescripcion.innerHTML
 
   if (newTitle.length > 0 && newDescription.length > 0) {
     saveNewArticleBtn.classList.add("is-loading")
@@ -36,7 +29,7 @@ function saveNewCreatedArticleIntoDatabase() {
       }),
     }).then((response) => {
       response.json().then((data) => {
-        document.querySelector(".is-loading").style.display = "none"
+        document.querySelector<HTMLDivElement>(".is-loading").style.display = "none"
 
         inputForNewTitle.value = ""
         textareaForNewDescripcion.value = ""

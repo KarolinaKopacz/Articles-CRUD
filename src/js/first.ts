@@ -1,12 +1,16 @@
 import { addListenerOnDeleteBtn } from "./deleteArticle"
 import { addListenerOnEditBtn } from "./editArticle"
 import { format } from "date-fns"
+import {Article } from './previewArticle'
+import { Quill } from "quill"
 
 const listOfArticles = document.querySelector(".list-of-articles")
 const requestURL = "https://articles-c78c.restdb.io/rest/articles"
-export let articles = []
+
+export let articles: Article[] = []
+
 export async function getJSON() {
-  document.querySelector(".is-loading").style.display = "inline-block"
+  document.querySelector<HTMLDivElement>(".is-loading").style.display = "inline-block"
   render([])
   return fetch(requestURL, {
     method: "get",
@@ -15,15 +19,14 @@ export async function getJSON() {
       "x-api-key": "6015b2ba6adfba69db8b6ba3",
     },
   }).then(async function (response) {
-    const jsonData = await response.json()
+    articles = await response.json()
 
-    jsonData.sort(function (a, b) {
+    articles.sort(function (a, b) {
       return b.createdAt - a.createdAt
     })
 
-    articles = jsonData
-    render(jsonData)
-    document.querySelector(".is-loading").style.display = "none"
+    render(articles)
+    document.querySelector<HTMLDivElement>(".is-loading").style.display = "none"
 
     return true
   })
@@ -41,7 +44,7 @@ function addListenerOnPreviewArticleBtns() {
   })
 }
 
-function render(collectionItems) {
+function render(collectionItems: Article[]) {
   listOfArticles.innerHTML = ""
   collectionItems.forEach(function (element, index) {
     const newDivWithNewArticle = `<tr>
@@ -76,3 +79,9 @@ function render(collectionItems) {
   addListenerOnEditBtn()
   addListenerOnPreviewArticleBtns()
 }
+const options = {
+  theme: "snow",
+}
+
+new Quill("#create", options)
+new Quill("#edit-description", options)

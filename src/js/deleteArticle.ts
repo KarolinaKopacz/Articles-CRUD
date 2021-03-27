@@ -1,7 +1,7 @@
 import { getJSON } from "./first"
 import { closeModal, openModal } from "./functions"
 
-const modalForConfirmDeleteArticle = document.querySelector(".modal-for-confirm-delete-article")
+const modalForConfirmDeleteArticle = document.querySelector<HTMLDivElement>(".modal-for-confirm-delete-article")
 
 export function addListenerOnDeleteBtn() {
   if (!modalForConfirmDeleteArticle) {

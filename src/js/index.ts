@@ -12,3 +12,7 @@ if (page === "home") {
 } else {
   getJSONoneArticle()
 }
+
+
+
+

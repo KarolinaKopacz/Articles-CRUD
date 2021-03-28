@@ -62,7 +62,7 @@ const watch = () => {
   js(watchedJs).pipe(connect.reload())
   watchedJs.on("update", (ev) => {
     js(watchedJs).pipe(connect.reload())
-    fancy_log(ev)
+    console.log(ev)
   })
   return connect.server({
     port: 8090,

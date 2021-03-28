@@ -11,10 +11,15 @@ const saveNewArticleBtn = document.querySelector("#save-new-article")
 
 function saveNewCreatedArticleIntoDatabase() {
   const newTitle = inputForNewTitle.value
-  const newDescription = textareaForNewDescripcion.innerHTML
+  const newDescription = textareaForNewDescripcion.value
+  console.log('savebt', saveNewArticleBtn)
+  console.log('title lenght', newTitle.length)
+  console.log('descr lenght', newDescription.length)
 
   if (newTitle.length > 0 && newDescription.length > 0) {
+
     saveNewArticleBtn.classList.add("is-loading")
+
 
     fetch(requestURL, {
       method: "post",

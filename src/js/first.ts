@@ -2,7 +2,6 @@ import { addListenerOnDeleteBtn } from "./deleteArticle"
 import { addListenerOnEditBtn } from "./editArticle"
 import { format } from "date-fns"
 import {Article } from './previewArticle'
-import { Quill } from "quill"
 
 const listOfArticles = document.querySelector(".list-of-articles")
 const requestURL = "https://articles-c78c.restdb.io/rest/articles"
@@ -39,7 +38,7 @@ function addListenerOnPreviewArticleBtns() {
     const dataId = btn.getAttribute("data-id")
 
     btn.addEventListener("click", () => {
-      location.href = `http://127.0.0.1:5500/dist/articlePreview.html?id=${dataId}`
+      location.href = `/articlePreview.html?id=${dataId}`
     })
   })
 }
@@ -79,9 +78,4 @@ function render(collectionItems: Article[]) {
   addListenerOnEditBtn()
   addListenerOnPreviewArticleBtns()
 }
-const options = {
-  theme: "snow",
-}
 
-new Quill("#create", options)
-new Quill("#edit-description", options)

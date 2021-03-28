@@ -2,9 +2,10 @@ import { getJSON } from "./first"
 import { articles } from "./first"
 import { closeModal, openModal } from "./functions"
 
+
 const modalFotEdittingArticle = document.querySelector<HTMLDivElement>(".modal-for-editing-article")
-const titleEditInput = document.querySelector<HTMLElement>("#edit-title")
-const descriptionEditContainer = document.querySelector<HTMLDivElement>("#edit-description")
+const titleEditInput = document.querySelector<HTMLInputElement>("#edit-title")
+const descriptionEditContainer = document.querySelector<HTMLTextAreaElement>("#edit-description")
 const editArticleIdHiddenInput = document.querySelector<HTMLElement>("#article-id")
 const saveEeditedArticleBtn = document.querySelector("#save-edited-article")
 
@@ -21,8 +22,8 @@ export function addListenerOnEditBtn() {
 
       articles.forEach((article) => {
         if (article._id === editArticleId) {
-          titleEditInput.innerHTML = article.title
-          descriptionEditContainer.innerHTML = article.description
+          titleEditInput.value = article.title
+          descriptionEditContainer.value = article.description
           editArticleIdHiddenInput.innerHTML = editArticleId
         }
       })
@@ -34,8 +35,10 @@ function saveEditedArticleIntoDatabase() {
   const newEditedArticleId = editArticleIdHiddenInput.innerHTML
   const requestURL = `https://articles-c78c.restdb.io/rest/articles/${newEditedArticleId}`
 
-  const newEditedTitle = titleEditInput.innerHTML
-  const newEditedDescription = descriptionEditContainer.innerHTML
+  const newEditedTitle = titleEditInput.value
+  const newEditedDescription = descriptionEditContainer.value
+  console.log('descri', descriptionEditContainer.value)
+
 
   if (newEditedTitle.length > 0 && newEditedDescription.length > 0) {
     saveEeditedArticleBtn.classList.add("is-loading")
